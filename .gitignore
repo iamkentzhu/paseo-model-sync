@@ -1,0 +1,6 @@
+node_modules/
+*.log
+
+# Paseo 会在插件目录旁写临时状态，别带进来
+.paseo/
+*.bak

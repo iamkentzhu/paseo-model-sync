@@ -1,0 +1,7 @@
+{
+  "id": "paseo-model-sync",
+  "name": "模型同步",
+  "requirements": {
+    "paseo": ">=0.11.1"
+  }
+}
