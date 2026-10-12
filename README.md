@@ -67,16 +67,16 @@ Full architecture and design tradeoffs: [OVERVIEW.md](OVERVIEW.md).
 
 **Write path / 写入过程**：
 
-1. Read models from 5 env vars by priority: `ANTHROPIC_MODEL` > `ANTHROPIC_OPUS` > `SONNET` > `FABLE` > `HAIKU`.
-2. 从 5 个环境变量按优先级取模型：`ANTHROPIC_MODEL` > Opus > Sonnet > Fable > Haiku。
-3. Diff against `agents.providers.claude.models` in `~/.paseo/config.json` — identical means no write at all.
-4. 与 `~/.paseo/config.json` 里的 `claude.models` 比对，一致就不写盘。
-5. Atomic write: backup (keeps 5) → temp file → `rename`, original permissions preserved.
-6. 原子写入：备份（保留 5 个）→ 写临时文件 → `rename` 覆盖，保留原文件权限。
-7. `paseo reload` so the daemon re-reads the config without restarting the plugin process.
-8. 调用 `paseo reload`，daemon 重读配置且不重启插件进程。
-9. In-app toast, e.g. `已同步 4 个模型，Paseo 已重载`.
-10. 应用内弹一条提示，如「已同步 4 个模型，Paseo 已重载」。
+1. Read models from 5 env vars by priority: `ANTHROPIC_MODEL` > Opus > Sonnet > Fable > Haiku.
+   从 5 个环境变量按优先级取模型：`ANTHROPIC_MODEL` > Opus > Sonnet > Fable > Haiku。
+2. Diff against `agents.providers.claude.models` in `~/.paseo/config.json` — identical means no write at all.
+   与 `~/.paseo/config.json` 里的 `claude.models` 比对，一致就不写盘。
+3. Atomic write: backup (keeps 5) → temp file → `rename`, original permissions preserved.
+   原子写入：备份（保留 5 个）→ 写临时文件 → `rename` 覆盖，保留原文件权限。
+4. `paseo reload` so the daemon re-reads the config without restarting the plugin process.
+   调用 `paseo reload`，daemon 重读配置且不重启插件进程。
+5. In-app toast, e.g. `已同步 4 个模型，Paseo 已重载`.
+   应用内弹一条提示，如「已同步 4 个模型，Paseo 已重载」。
 
 **State / 状态持久化** — `changeSeq` and `lastChangeAt` live in `~/.paseo/plugin-data/paseo-model-sync/state.json` so the toast counter survives plugin reloads.
 
@@ -87,7 +87,8 @@ Full architecture and design tradeoffs: [OVERVIEW.md](OVERVIEW.md).
 ## Install / 安装
 
 ```bash
-paseo plugin install ~/SynologyDrive/TRAE/repos/paseo-model-sync
+git clone https://github.com/iamkentzhu/paseo-model-sync.git
+paseo plugin install ./paseo-model-sync
 ```
 
 Or add the directory from Paseo Desktop's plugin manager.
@@ -135,9 +136,9 @@ No build step — Paseo loads the `.tsx` sources directly.
 Either condition is enough / 满足**任一**即可删除：
 
 1. Paseo fixes [#6434](https://github.com/getpaseo/paseo/issues/6434) **and** you don't mind the built-in catalog sitting next to your models.
-2. Paseo 修好了 [#6434](https://github.com/getpaseo/paseo/issues/6434)，**并且**你不在意列表里还混着十几个内置模型。
-3. CC Switch (or whichever tool you use) ships its own Paseo plugin that syncs models officially.
-4. CC Switch（或你用的工具）自己提供了官方同步模型的 Paseo 插件。
+   Paseo 修好了 [#6434](https://github.com/getpaseo/paseo/issues/6434)，**并且**你不在意列表里还混着十几个内置模型。
+2. CC Switch (or whichever tool you use) ships its own Paseo plugin that syncs models officially.
+   CC Switch（或你用的工具）自己提供了官方同步模型的 Paseo 插件。
 
 Until then, this plugin is what makes Paseo cooperate with third-party provider tools.
 
