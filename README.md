@@ -148,6 +148,6 @@ Until then, this plugin is what makes Paseo cooperate with third-party provider 
 
 ## License
 
-No license file. Personal tool, provided as-is.
+MIT. See [LICENSE](LICENSE).
 
-无 LICENSE 文件。个人自用工具，按原样提供。
+MIT 协议，见 [LICENSE](LICENSE)。
