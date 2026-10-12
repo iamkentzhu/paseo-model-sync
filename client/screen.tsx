@@ -29,7 +29,7 @@ const STATE_COLOR = {
 } as const;
 
 /** 同步状态面板。 */
-export function SyncScreen({ theme, layout }: PluginScreenProps) {
+export function SyncScreen({ theme, layout, host }: PluginScreenProps) {
   const toast = useToast();
   // 面板只读：同步、提示都由常驻的侧栏项负责。这里的按钮只是显式触发一次。
   const sync = useModelSync(() => {}, { watch: false });
@@ -94,6 +94,18 @@ export function SyncScreen({ theme, layout }: PluginScreenProps) {
         title: { color: theme.colors.foreground, fontSize: 15, fontWeight: "600", marginBottom: 8 },
         notice: { color: theme.colors.foregroundMuted, fontSize: 13, padding: 14, lineHeight: 19 },
         danger: { color: theme.colors.statusDanger, fontSize: 13, padding: 14 },
+        hostRow: {
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 6,
+          paddingHorizontal: 14,
+          paddingVertical: 10,
+          backgroundColor: theme.colors.surface2,
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          borderBottomColor: theme.colors.border,
+        },
+        hostLabel: { color: theme.colors.foreground, fontSize: 12, fontWeight: "600" },
+        hostId: { color: theme.colors.foregroundMuted, fontSize: 11 },
         button: {
           backgroundColor: theme.colors.accent,
           borderRadius: 8,
@@ -114,6 +126,12 @@ export function SyncScreen({ theme, layout }: PluginScreenProps) {
       <View>
         <Text style={styles.title}>模型同步</Text>
         <View style={styles.card}>
+          <View style={styles.hostRow}>
+            <Text style={styles.hostLabel}>{host.label}</Text>
+            <Text style={styles.hostId} numberOfLines={1}>
+              {host.id}
+            </Text>
+          </View>
           <View style={styles.row}>
             <Text style={styles.label}>状态</Text>
             <Text style={[styles.value, { color: theme.colors[stateColor] }]}>
